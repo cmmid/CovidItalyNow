@@ -10,8 +10,12 @@ require(future)
 
 future::plan("multiprocess")
 
-# Update nowcast report ---------------------------------------------------
 
+# Update regional methods -------------------------------------------------
+
+source("utils/update-region-methods.R")
+
+# Update nowcast report ---------------------------------------------------
 
 message("Rendering report to all formats")
 ## Render to analysis to required output formats

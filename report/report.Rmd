@@ -42,6 +42,8 @@ regions <- regions[order(regions)]
 
 names(regions) <- regions 
 
+names(regions)[regions %in% "national"] <- "National"
+
 ## Results directory (relative to report directory)
 results_dir <- "../results"
 
@@ -59,6 +61,12 @@ load_data <- function(file = NULL, country = NULL, date = target_date,
   
   return(object)
 }
+
+## Overall figures and tables
+summary_figures <- 3
+summary_tables <- 1
+regional_methods_dir <- "man/region-specific-methods"
+news_dir <- "man/news"
 ```
 
 *S. Abbott (1),  J. D. Munday (1), J. Hellewell (1), R. N. Thompson (1), N. Bosse (1), CMMID COVID team (1), S. Flasche (1),  A. J. Kucharski (1), R. M. Eggo (1), S. Funk (1).*
@@ -78,7 +86,7 @@ load_data <- function(file = NULL, country = NULL, date = target_date,
 
 `r paste0("**Latest estimates as of the ", target_date, "**")`
 
-### Map
+### Region map
 
 ```{r load-results}
 map_prob_change <- function(var) {
@@ -142,7 +150,7 @@ regions <- purrr::map_chr(high_inc_regions, ~ regions[names(regions) %in% .])
 names(regions) <- high_inc_regions
 ```
 
-```{r global-map, fig.width = 6, fig.height = 8}
+```{r national-map, fig.width = 6, fig.height = 6}
 ## Load case data with region codes
 region_codes <- readRDS("../data/region_codes.rds")
 
@@ -155,7 +163,7 @@ estimates %>%
 ```
 
 <br>
-`r paste0("*Figure 1: Map of the expected change in daily cases based on data from the ", target_date, ".*")`
+`r paste0("*Figure 1: Regional map of the expected change in daily cases based on data from the ", target_date, ".*")`
 
 ### Summary of latest reproduction number and case count estimates
 
@@ -175,9 +183,9 @@ numeric_estimates %>%
 ```
 
 <br>
-`r paste0("*Figure 2: Cases with date of onset on the day of report generation and the time-varying estimate of the effective reproduction number (bar = 95% credible interval) based on data from the ", target_date, ". Countries/Regions are ordered by the number of expected daily cases and shaded based on the expected change in daily cases. The dotted line indicates the target value of 1 for the effective reproduction no. required for control and a single case required fror elimination.*")`
+`r paste0("*Figure 2: Cases with date of onset on the day of report generation and the time-varying estimate of the effective reproduction number (bar = 95% credible interval) based on data from the ", target_date, ". Regions are ordered by the number of expected daily cases and shaded based on the expected change in daily cases. The dotted line indicates the target value of 1 for the effective reproduction no. required for control and a single case required fror elimination.*")`
 
-### Reproduction numbers over time in the six countries with the most cases currently
+### Reproduction numbers over time in the 5 regions with the most cases currently and nationally
 
 ```{r summarise-bigr-plot, fig.height = 9, fig.width = 12}
 plots <- regions[names(regions) %in% high_inc_regions[1:6]] %>% 
@@ -199,13 +207,13 @@ plots %>%
 ```
 
 <br>
-`r paste0("*Figure 3: Time-varying estimate of the effective reproduction number (light grey ribbon = 95% credible interval; dark grey ribbon = the interquartile range) based on data from the ", target_date, " in the countries/regions expected to have the highest number of incident cases. Confidence in the estimated values is indicated by shading with reduced shading corresponding to reduced confidence. The dotted line indicates the target value of 1 for the effective reproduction no. required for control.*")`
+`r paste0("*Figure 3: Time-varying estimate of the effective reproduction number (light grey ribbon = 95% credible interval; dark grey ribbon = the interquartile range) based on data from the ", target_date, " in the regions expected to have the highest number of incident cases. Confidence in the estimated values is indicated by shading with reduced shading corresponding to reduced confidence. The dotted line indicates the target value of 1 for the effective reproduction no. required for control.*")`
 
 
 ### Latest estimates summary table
 
 ```{r summary-table-1}
-caption <- paste0("Latest estimates of the number of cases by date of onset, the effective reproduction number, and the doubling time for the ", target_date, " in each region included in the analysis. Based on the last 7 days of data. The 95\\% credible interval is shown for each numeric estimate. China excludes Hubei.")
+caption <- paste0("Latest estimates of the number of cases by date of onset, the effective reproduction number, and the doubling time for the ", target_date, " in each region included in the analysis. Based on the last 7 days of data. The 95\\% credible interval is shown for each numeric estimate.")
 
 estimates <- names(regions) %>% 
   purrr::map_dfr(~ dplyr::filter(estimates, `Country/Region` %in% .))
@@ -223,41 +231,32 @@ knitr::kable(estimates, booktabs = TRUE, caption = ifelse(!knitr:::is_latex_outp
 
 ### Summary
 
-* Case counts by date, stratified by import status (local or imported), were constructed using the World Health Organization (WHO) situation reports and partial line-lists for each region [@WorldHealthOrganization:sitrep; @EricBrown2020, @kraemer2020epidemiological].
-* Case onset dates were estimated using case counts by date of report and a distribution of reporting delays fitted to partial line-lists from each region considered where available.
+* Case counts by date, stratified by region, were constructed from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata].
+* Case onset dates were estimated using case counts by date of report and a distribution of reporting delays fitted to a European line-lists.
 * Censoring of cases was adjusted for by assuming that the number of cases is drawn from a binomial distribution.
 * Time-varying effective reproduction estimates were made with a 7-day sliding window using *EpiEstim* [@EpiEstim; @THOMPSON2019100356] adjusted for imported cases and assuming an uncertain serial interval with a mean of 4.7 days (95% CrI: 3.7, 6.0) and a standard deviation of 2.9 days (95% CrI: 1.9, 4.9) [@Nishiura2020.02.03.20019497].
 * Time-varying estimates of the doubling time were made with a 7-day sliding window by iteratively fitting an exponential regression model. 
+* The methods in this report are based on our previous study of the global temporal variation during the COVID-19 outbreak [@timevary].
 
 ### Limitations
 
-* The estimated onset dates are based on current data for the delay in reporting. These data may not be representative of the underlying reporting distribution.
+* The estimated onset dates are based on current European data for the delay in reporting. These data may not be representative of the underlying reporting distribution.
 * The estimate of not-yet-confirmed cases to scale up recent numbers is uncertain and relies on the observed delays to confirmation to remain constant over the course of the outbreak.
-* All data used is at a national/regional level; diagnostic capabilities may vary in different parts of each country/region, adding uncertainty to the reported numbers.
+* All data used is at a national/regional level; diagnostic capabilities may vary in different parts of each region, adding uncertainty to the reported numbers.
 * Trends identified using our approach are robust to under-reporting assuming it is constant but absolute values may be biased by reporting rates. Pronouced changes in reporting rates may also impact the trends identified.
-* Data on imported cases was only partially available. 
-* The reporting delay could not be estimated from line-list data for all regions. Region specific details are given in the individual regional reports.
-* Data on imported cases may not be fully complete. This may bias estimates upwards when overall case counts are low.
+* Data on imported cases was not available (either international imports or between region imports).
 
 ### Detail
 
 #### Data
 
-We used partial line-lists from each region that contained the date of symptom onset, date of confirmation and import status (imported or local) for each case [@kraemer2020epidemiological] where available. The region reports give details of the steps taken where this data were not available. Daily case counts by date of report were extracted from the World Health Organization (WHO) situation reports for every location considered [@WorldHealthOrganization:sitrep; @EricBrown2020]. The case counts (and partial line-lists where available) were used to assemble the daily number of local and imported cases. Where the partial line-lists and case counts disagreed, it was assumed that the partial line-lists were correct and the WHO case counts were adjusted so that the overall number of cases occurring remained the same but the number of local cases being adjusted as needed.
+We used a European line-list that contained the date of symptom onset, date of confirmation and import status (imported or local) for each case [@kraemer2020epidemiological] where available. Daily case counts by date of report and region were extracted from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata]. 
 
-#### Adjusting for reporting delays
 
-Reporting delays for each country were estimated using the corresponding partial line-list of cases. The reporting delay could not be estimated from line-list data for all regions. Region specific details are given in the individual regional reports. The estimated reporting delay was assumed to remain constant over time in each location. We fitted an exponential distribution adjusted for censoring [@Thompson:2020bc] to the observed delays using stan [@rstan]. We then took 1000 samples from the posterior distribution of the rate parameter for the exponential delay distribution and constructed a distribution of possible onset dates for each case based on their reporting date. To prevent spuriously long reporting delays, we re-sampled delays that were greater than the maximum observed delay in the observed data.
+#### Statistical analysis
 
-To account for censoring, i.e. cases that have not yet been confirmed but will show up in the data at a later time, we randomly sampled the true number of cases (including those not yet confirmed) assuming that the reported number of cases is drawn from a binomial distribution, where each case has independent probability $p_i$ of having been confirmed, $i$ is the number of days of the symptom onset before the report maximum observed report delay, and $p_i$ is the cumulative distribution of cases that are confirmed by day $i$ after they develop symptoms. We did not account for potential reporting biases that might occur due to changes in the growth rate of the outbreak over time.
- 
-####  Statistical analysis
+We used the same approach as in our previous global study of the temporal variation in transmission during the COVID-19 outbreak [@timevary]. However, due to a limited line-list of Italian cases we used combined linelist data from Germany, France, Italy, Austria, the Netherlands, Belgium, and Spain to estimate the report delay. We could also not account for imported cases (either international or between region) due to a shortage of data. 
 
-We used the inferred number of cases to estimate the reproduction number on each day using the *EpiEstim* R package [@EpiEstim, @R]. This uses a combination of the serial interval distribution and the number of observed cases to estimate the reproduction number at each time point [@cori2013;@wallinga2004], which were then smoothed using a 7-day time window. We assumed that the serial interval was uncertain with a mean of 4.7 days (95% CrI: 3.7, 6.0) and a standard deviation of 2.9 days (95% CrI: 1.9, 4.9) [@Nishiura2020.02.03.20019497]. We used a common prior for the reproduction number with mean 2.6 and a standard deviation of  2 (inflated from 0.5 found in the reference) [@Imai:webreport3].  Where data was available, we used *EpiEstim* to adjust for imported cases [@THOMPSON2019100356]. The expected change in daily cases was defined using the proportion of samples with a reproduction number less than 1 (subcritical). It was assumed that if less than 5% of samples were subcritical then an increase in cases was definite, if less than 20% of samples were subcritical then an increase in cases was likely, if more than 80% of samples were subcritical then a decrease in cases was likely and if more than 95% of samples were subcritical then a decrease in cases was definite. For countries/regions with between 20% and 80% of samples being subcritical we could not make a statement about the likely change in cases (defined as unsure).
-
-We estimated the rate of spread ($r$) using linear regression with time as the only exposure and logged cases as the outcome for the overall course of the outbreak [@Park2019]. The adjusted R^2 value was then used to assess the goodness of fit. In order to account for potential changes in the rate of spread over the course of the outbreak we used a 7-day sliding window to produce time-varying estimates of the rate of spread and the adjusted R^2. The doubling time was then estimated using $\text{ln}(2) \frac{1}{r}$ for each estimate of the rate of spread.
-
-We report the 95% confidence intervals for all measures using the 2.5% and 97.5% quantiles. The analysis was conducted independently for all regions and is updated daily as new data becomes available. Confidence in our estimates is shown using the proportion of data that were derived using binomial upscaling.
 
 `r if(!knitr:::is_latex_output()) '## Regional reports {.tabset}'`
 
@@ -267,7 +266,8 @@ region_summaries <- 1:length(regions) %>%
     index <- region_index
     region <- regions[region_index]
     region_name <- names(regions)[region_index]
-   out <- knitr::knit_child("region-report.Rmd", envir = environment()) 
+   out <- knitr::knit_child(system.file("rmarkdown-templates/region-report.Rmd", 
+                                        package = "EpiNow"), envir = environment()) 
   })
 ```
 
@@ -282,7 +282,8 @@ cat(paste(region_summaries, collapse = '\n'))
 update_reports <- rev(updates) %>% 
   purrr::map(function(target_update) {
     update <- target_update
-   out <- knitr::knit_child("report-news.Rmd", envir = environment()) 
+   out <- knitr::knit_child(system.file("rmarkdown-templates/report-news.Rmd",
+                                        package = "EpiNow"), envir = environment()) 
   })
 ```
 

@@ -33,10 +33,17 @@ cases <- cases %>%
   dplyr::mutate(imported = 0) %>% 
   tidyr::gather(key = "import_status", value = "cases", local, imported)
 
-
 # Get linelist ------------------------------------------------------------
 
-linelist <- NCoVUtils::get_international_linelist("Italy")
+linelist <- #' Get a combined linelist based on multiple countries data
+    NCoVUtils::get_international_linelist("Germany") %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("Italy")) %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("France")) %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("Spain")) %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("Autria")) %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("Netherlands")) %>%
+      dplyr::bind_rows(NCoVUtils::get_international_linelist("Belgium")) %>%
+      tidyr::drop_na(report_delay)
 
 # Set up cores -----------------------------------------------------
 
