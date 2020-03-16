@@ -40,9 +40,7 @@ regions <- list.files("../results/")
 ## Put into alphabetical order
 regions <- regions[order(regions)]
 
-names(regions) <- regions %>% 
-    stringr::str_replace_all("-", " ") %>% 
-    stringr::str_to_title()
+names(regions) <- regions 
 
 ## Results directory (relative to report directory)
 results_dir <- "../results"
@@ -71,7 +69,7 @@ load_data <- function(file = NULL, country = NULL, date = target_date,
 
 *Last Updated:* `r target_date`
 
-*Note: this is preliminary analysis, has not yet been peer-reviewed and is updated daily as new data becomes available. This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). A summary of this report can be downloaded [here](https://cmmid.github.io/topics/covid19/current-patterns-transmission/reports/global-time-varying-transmission/summary.pdf)*
+*Note: this is preliminary analysis, has not yet been peer-reviewed and is updated daily as new data becomes available. This work is licensed under a [Creative Commons Attribution 4.0 International License](https://creativecommons.org/licenses/by/4.0/). A summary of this report can be downloaded [here](https://cmmid.github.io/topics/covid19/current-patterns-transmission/reports/italy-time-varying-transmission/summary.pdf)*
 
 ## Summary {.tabset}
 
@@ -144,18 +142,20 @@ regions <- purrr::map_chr(high_inc_regions, ~ regions[names(regions) %in% .])
 names(regions) <- high_inc_regions
 ```
 
-```{r global-map, fig.width = 12, fig.height = 6}
-# estimates %>% 
-#   dplyr::rename(country = `Country/Region`) %>% 
-#   dplyr::filter(!country %in% c("Hong Kong", "Hubei")) %>% 
-#   EpiNow::global_map(variable = "Expected change in daily cases") +
-#   ggplot2::guides(fill = ggplot2::guide_legend(title = "Expected change in daily cases",
-#                                                ncol = 2))
-# <br>
-# `r paste0("*Figure 1: Global map of the expected change in daily cases based on data from the ", target_date, ". Note: only country level estimates are shown.*")`
+```{r global-map, fig.width = 6, fig.height = 8}
+## Load case data with region codes
+region_codes <- readRDS("../data/region_codes.rds")
+
+estimates %>% 
+  dplyr::rename(region = `Country/Region`) %>%  
+  dplyr::left_join(region_codes, by = "region") %>% 
+  EpiNow::country_map(country = "Italy", variable = "Expected change in daily cases") +
+  ggplot2::guides(fill = ggplot2::guide_legend(title = "Expected change in daily cases",
+                                               ncol = 2))
 ```
 
-
+<br>
+`r paste0("*Figure 1: Map of the expected change in daily cases based on data from the ", target_date, ".*")`
 
 ### Summary of latest reproduction number and case count estimates
 

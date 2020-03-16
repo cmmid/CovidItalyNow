@@ -18,7 +18,17 @@ source("utils/get_regional_cases.R")
 
 # Get cases ---------------------------------------------------------------
 
-cases <- get_regional_cases() %>% 
+cases <- get_regional_cases()
+
+
+region_codes <- cases %>% 
+  dplyr::select(region, region_code) %>% 
+  unique() %>% 
+  dplyr::mutate(region_code = as.numeric(region_code))
+
+saveRDS(region_codes, "data/region_codes.rds")
+
+cases <- cases %>% 
   dplyr::rename(local = cases) %>% 
   dplyr::mutate(imported = 0) %>% 
   tidyr::gather(key = "import_status", value = "cases", local, imported)
