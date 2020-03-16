@@ -151,10 +151,11 @@ names(regions) <- high_inc_regions
 #   EpiNow::global_map(variable = "Expected change in daily cases") +
 #   ggplot2::guides(fill = ggplot2::guide_legend(title = "Expected change in daily cases",
 #                                                ncol = 2))
+# <br>
+# `r paste0("*Figure 1: Global map of the expected change in daily cases based on data from the ", target_date, ". Note: only country level estimates are shown.*")`
 ```
 
-<br>
-`r paste0("*Figure 1: Global map of the expected change in daily cases based on data from the ", target_date, ". Note: only country level estimates are shown.*")`
+
 
 ### Summary of latest reproduction number and case count estimates
 
