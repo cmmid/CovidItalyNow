@@ -8,6 +8,8 @@ output:
 bibliography: resources/library.bib
 ---
 
+
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(echo = FALSE, eval = TRUE,
                       fig.width = 6, fig.height = 3,
