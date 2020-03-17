@@ -23,7 +23,7 @@ Description: To identify changes in the reproduction number, rate of spread,
              and doubling time during the course of COVID outbreak in Italy whilst accounting 
              for potential biases due to delays in case reporting.
 Imports:
-    EpiNow
+    EpiNow,
     NCoVUtils,
     furrr,
     future,
