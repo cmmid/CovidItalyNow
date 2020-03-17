@@ -10,10 +10,10 @@ RUN apt-get update -y && \
     && apt-get clean
 
 ## Copy files to working directory of server
-ADD . /home/rstudio/CovidGlobalNow
+ADD . /home/rstudio/CovidItalyNow
 
 ## Set working directory to be this folder
-WORKDIR /home/rstudio/CovidGlobalNow
+WORKDIR /home/rstudio/CovidItalyNow
 
 ## Install missing packages
 RUN Rscript -e "devtools::install_dev_deps()"
