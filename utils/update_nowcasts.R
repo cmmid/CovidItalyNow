@@ -11,14 +11,12 @@ require(purrr)
 require(magrittr)
 
 
-# Get resources -----------------------------------------------------------
-
-
-source("utils/get_regional_cases.R")
 
 # Get cases ---------------------------------------------------------------
 
-cases <- get_regional_cases()
+NCoVUtils::reset_cache()
+
+cases <- NCoVUtils::get_italy_regional_cases()
 
 
 region_codes <- cases %>% 
@@ -50,7 +48,6 @@ linelist <- #' Get a combined linelist based on multiple countries data
 future::plan("multiprocess", workers = future::availableCores())
 
 data.table::setDTthreads(threads = 1)
-
 
 # Run pipeline ----------------------------------------------------
 

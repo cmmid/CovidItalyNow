@@ -24,12 +24,12 @@ Rscript -e "EpiNow::copy_report(
                yaml = 'man/report-yaml.md',
                report = 'vignettes/cmmid_report/report.html',
                date = Sys.Date(),
-               report_target = '../cmmid.github.io/topics/covid19/current-patterns-transmission/_posts/2020-03-16-italy-time-varying-transmission.html')"
+               report_target = '../cmmid.github.io/topics/covid19/current-patterns-transmission/_posts/2020-03-17-italy-time-varying-transmission.html')"
 
 
 # Copy across summary pdf reports
 
-cp vignettes/rendered_output/report.pdf ../cmmid.github.io/topics/covid19/current-patterns-transmission/reports/italy-time-varying-transmission/summary.pdf
+cp vignettes/rendered_output/report.pdf ../cmmid.github.io/topics/covid19/current-patterns-transmission/reports/national-time-varying-transmission/italy.pdf
 # Update Repo
 
 cd ../$project
