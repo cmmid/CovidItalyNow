@@ -257,7 +257,7 @@ We used a European line-list that contained the date of symptom onset, date of c
 
 #### Statistical analysis
 
-We used the same approach as in our previous global study of the temporal variation in transmission during the COVID-19 outbreak [@timevary]. However, due to a limited line-list of Italian cases we used a combined linelist of cases from Germany, France, Italy, Austria, the Netherlands, Belgium, and Spain to estimate the report delay. We could also not account for imported cases (either international or between region) due to a shortage of data. 
+We used the same approach as in our previous global study of the temporal variation in transmission during the COVID-19 outbreak [@timevary]. However, due to a limited line-list of Italian cases we used a combined linelist of cases from Germany, France, Italy, Austria, the Netherlands, Belgium, and Spain to estimate the report delay. We could also not account for imported cases (either international or between region) due to a shortage of data. Code and results from this analysis can be found [here](https://epiforecasts.io/EpiNow) and [here](https://github.com/cmmid/CovidItalyNow).
 
 
 `r if(!knitr:::is_latex_output()) '## Regional reports {.tabset}'`

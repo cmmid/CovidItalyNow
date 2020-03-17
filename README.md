@@ -1,6 +1,7 @@
 
 # Temporal variation in transmission during the COVID-19 outbreak in Italy
 
+*Warning: This analysis is a work in progress. Breaking changes may occur and the authors cannot guarantee support.*
 
 **Aim:** To identify changes in the reproduction number, rate of spread, and doubling time during the course of the COVID-19 outbreak in Italy whilst accounting for potential biases due to delays in case reporting.
 
