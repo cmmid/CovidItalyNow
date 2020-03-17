@@ -24,5 +24,4 @@ authors:
   - id: adam_kucharski
   - id: roz_eggo
   - id: seb_funk
-
 ---

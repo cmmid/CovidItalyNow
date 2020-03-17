@@ -18,24 +18,24 @@ fi
 
 # Add new report to Repo
 
-cd TimeVaryingNCovR0
+cd CovidItalyNow
 
 Rscript -e "EpiNow::copy_report(
                yaml = 'man/report-yaml.md',
-               report = 'vignettes/cmmid_report/report.html',
+               report = 'report/cmmid_report/report.html',
                date = Sys.Date(),
+               lines_to_cut = 1:7,
                report_target = '../cmmid.github.io/topics/covid19/current-patterns-transmission/_posts/2020-03-17-italy-time-varying-transmission.html')"
 
 
 # Copy across summary pdf reports
-
-cp vignettes/rendered_output/report.pdf ../cmmid.github.io/topics/covid19/current-patterns-transmission/reports/national-time-varying-transmission/italy.pdf
+cp  report/rendered_output/report.pdf ../cmmid.github.io/topics/covid19/current-patterns-transmission/reports/national-time-varying-transmission/italy.pdf
 # Update Repo
 
 cd ../$project
 
 git add --all
-git commit -m "Update time-varying rt"
+git commit -m "Update Italy time-varying rt"
 git push
 
 cd ../$source

@@ -233,7 +233,7 @@ knitr::kable(estimates, booktabs = TRUE, caption = ifelse(!knitr:::is_latex_outp
 
 ### Summary
 
-* Case counts by date, stratified by region, were constructed from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata, @NCoVUtils].
+* Case counts by date, stratified by region, were constructed from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata; @NCoVUtils].
 * Case onset dates were estimated using case counts by date of report and a distribution of reporting delays fitted to a European line-list.
 * Censoring of cases was adjusted for by assuming that the number of cases is drawn from a binomial distribution.
 * Time-varying effective reproduction estimates were made with a 7-day sliding window using *EpiEstim* [@EpiEstim; @THOMPSON2019100356] adjusted for imported cases and assuming an uncertain serial interval with a mean of 4.7 days (95% CrI: 3.7, 6.0) and a standard deviation of 2.9 days (95% CrI: 1.9, 4.9) [@Nishiura2020.02.03.20019497].
@@ -252,12 +252,12 @@ knitr::kable(estimates, booktabs = TRUE, caption = ifelse(!knitr:::is_latex_outp
 
 #### Data
 
-We used a European line-list that contained the date of symptom onset, date of confirmation and import status (imported or local) for each case [@kraemer2020epidemiological, @NCoVUtils] where available. Daily case counts by date of report and region were extracted from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata, @NCoVUtils]. 
+We used a European line-list that contained the date of symptom onset, date of confirmation and import status (imported or local) for each case [@kraemer2020epidemiological; @NCoVUtils] where available. Daily case counts by date of report and region were extracted from daily datasets made publically available by the Dipartimento della Protezione Civile [@italydata; @NCoVUtils]. 
 
 
 #### Statistical analysis
 
-We used the same approach as in our previous global study of the temporal variation in transmission during the COVID-19 outbreak [@timevary]. However, due to a limited line-list of Italian cases we used a combined linelist of cases from Germany, France, Italy, Austria, the Netherlands, Belgium, and Spain to estimate the report delay. We could also not account for imported cases (either international or between region) due to a shortage of data. Code and results from this analysis can be found [here](https://epiforecasts.io/EpiNow) and [here](https://github.com/cmmid/CovidItalyNow).
+We used the same approach as in our previous global study of the temporal variation in transmission during the COVID-19 outbreak [@timevary]. However, due to a limited line-list of Italian cases we used a combined linelist of cases from Germany, France, Italy, Austria, the Netherlands, Belgium, and Spain to estimate the report delay. We could also not account for imported cases (either international or between region) due to a shortage of data. Code and results from this analysis can be found [here](https://github.com/epiforecasts/EpiNow) and [here](https://github.com/cmmid/CovidItalyNow).
 
 
 `r if(!knitr:::is_latex_output()) '## Regional reports {.tabset}'`
