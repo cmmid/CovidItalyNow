@@ -242,11 +242,12 @@ knitr::kable(estimates, booktabs = TRUE, caption = ifelse(!knitr:::is_latex_outp
 
 ### Limitations
 
-* The estimated onset dates are based on current European data for the delay in reporting. These data may not be representative of the underlying reporting distribution.
+* The estimated onset dates are based on current European data for the delay in reporting and are mostly from the beginning of the outbreak. This means that these data may not be representative of the underlying delay distribution.
 * The estimate of not-yet-confirmed cases to scale up recent numbers is uncertain and relies on the observed delays to confirmation to remain constant over the course of the outbreak.
-* All data used is at a national/regional level; diagnostic capabilities may vary in different parts of each region, adding uncertainty to the reported numbers.
+* All data used is at a national/regional level; diagnostic capabilities may vary in different parts of each region, adding uncertainty to the reported numbers. The true number of infections reflected in a given number of confirmed cases probably varies substantially geographically.
 * Trends identified using our approach are robust to under-reporting assuming it is constant but absolute values may be biased by reporting rates. Pronouced changes in reporting rates may also impact the trends identified.
 * Data on imported cases was not available (either international imports or between region imports).
+* As our estimates are made at the date of symptom onset any changes in the time-varying parameters will be delayed by the incubation period. 
 
 ### Detail
 
