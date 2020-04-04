@@ -25,3 +25,5 @@ authors:
   - id: roz_eggo
   - id: seb_funk
 ---
+
+<p><b>This analysis is now archived but has been updated <a href="https://epiforecasts.io/covid/posts/global/">elsewhere</a>.</b></p>
