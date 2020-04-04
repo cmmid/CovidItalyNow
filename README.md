@@ -1,6 +1,8 @@
 
 # Temporal variation in transmission during the COVID-19 outbreak in Italy
 
+**This analysis has now be superseded. For the new results see [here](https://epiforecasts.io/covid/posts/national/italy/) and see [here](https://github.com/epiforecasts/covid)  and [here](https://github.com/epiforecasts/EpiNow) for the supporting code.**
+
 *Warning: This analysis is a work in progress. Breaking changes may occur and the authors cannot guarantee support.*
 
 **Aim:** To identify changes in the reproduction number, rate of spread, and doubling time during the course of the COVID-19 outbreak in Italy whilst accounting for potential biases due to delays in case reporting.
